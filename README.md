@@ -7,4 +7,5 @@
 	<code>
 		npm install
 	</code>
+	<p>Para acessar: http://localhost:3333</p>
 </div>
