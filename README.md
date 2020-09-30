@@ -1,11 +1,11 @@
-## Configuração do ambiente
+## Environment Setting
 
-### Dependências
+### Dependencies
 <div>
-	<p>Instalar a versão 12 do Nodejs.</p>
-	<p>Para instalar as dependências, execute o comando dentro da pasta do projeto:</p>
+	<p>Install Nodejs version 12.</p>
+	<p>Run that command inside the project folder:</p>
 	<code>
 		npm install
 	</code>
-	<p>Para acessar: http://localhost:3333</p>
+	<p>Access: http://localhost:3333</p>
 </div>
