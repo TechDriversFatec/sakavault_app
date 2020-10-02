@@ -1,0 +1,26 @@
+frontend/
+    public/
+        --> não precisa alterar
+    src/
+        assets/
+            logo.svg
+        pages/   
+            Logon/         --> Tela inicial da aplicação
+            NewIncident/   --> Tela de Cadastro
+            Profile/       --> Tela de Listagem dos itens
+            Register/      --> Tela de registro de usuário
+        
+        services/
+            api.js   --> faz a conexão com o backend
+            auth.js  --> token
+
+        App.js
+        global.css   --> Estilização global
+        Header.js  
+        index.js     --> Não precisa alterar
+        routes.js    --> Arquivo de routes para acessar diretorio pages/
+    
+    .gitignore
+    package.json
+    estrutura_de_pasta.txt
+    README.md

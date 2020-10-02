@@ -49,6 +49,10 @@ export default function Profile() {
         history.push('/');
     }
 
+    // Delete account
+    function handleDeleteAccount(){
+        
+    }
 
     return (
         <div className="profile-container">
@@ -56,23 +60,24 @@ export default function Profile() {
                 <img src={ logoImg } alt="SakaVault"/>
 
                 <Link className="button" to="/incidents/new">
-                    Cadastrar novo cadastro
+                    Cadastrar novo segredo
                 </Link>
 
+                <button onClick={ handleDeleteAccount } type="submit"></button>
                 <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
             </header>
 
-            <h1>Casos cadastrados</h1>
+            <h1>Segredos cadastrados</h1>
 
             <ul>
                { incidents.map(incidents => (
                     <li key={ incidents.id }>
-                        <strong>CASO</strong>
+                        <strong>Titulo</strong>
                         <p>{ incidents.title }</p>
-                        <strong>DESCRIÇÃO</strong>
+                        <strong>Usuário</strong>
                         <p>{ incidents.description }</p>
-                        <strong>VALOR</strong>
-                        <p>{ Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incidents.value) }</p>
+                        <strong>E-mail</strong>
+                        <p>{ incidents.password }</p>
 
                         <button onClick={ () => handleDeleteIncident(incidents.id), () => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(incidents.id) } } type="button">
                             <FiTrash2 size={20} color="#a8a8b3"/>
@@ -80,6 +85,27 @@ export default function Profile() {
                     </li>
                )) }
             </ul>
+
+            <div className="modal hidden">
+                <span onclick="document.getElementByClassName('hidden').style.display='none'" class="close" title="Close Modal">×</span>
+                <form className="modal-content" onSubmit={}>
+                    <div className="container">
+                    <h1>Remover Conta</h1>
+                    <span>
+                        <p>Tem certeza que deseja deletar sua conta?</p>
+                        <p className="strong">
+                        Todos os dados serão perdidos permanentemente sem a possibilidade de recuperação.
+                        </p>
+                    </span>
+                    
+                    
+                    <div className="clearfix">
+                        <button className="button-red" type="button" onclick="document.getElementById('id01').style.display='none'" className="cancelbtn">Cancelar</button>
+                        <button type="button" onclick="document.getElementById('id01').style.display='none'" className="deletebtn">Remover</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

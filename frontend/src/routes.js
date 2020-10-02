@@ -9,18 +9,18 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewSecret from './pages/NewIncident';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={props =>
-        isAuthenticated() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-        )
-      }
-    />
-);
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         isAuthenticated() ? (
+//           <Component {...props} />
+//         ) : (
+//           <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+//         )
+//       }
+//     />
+// );
 
 const Routes = () => (
     <BrowserRouter>
