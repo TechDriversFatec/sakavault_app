@@ -5,10 +5,10 @@ import { FiArrowLeft } from 'react-icons/fi';
 import api from '../../services/api';
 
 // Styles
-import './styles.css'
+import './styles.css';
 
 // Import logo
-import logoImg from '../../assets/logo.svg'
+import logoImg from '../../assets/logo.svg';
 
 export default function Resgister() {
     const [name, setName] = useState('');
@@ -23,9 +23,7 @@ export default function Resgister() {
         const data = { name, email, password};
 
         try {
-            const response = await api.post('ongs', data);
-            
-            alert(`Seu ID de acesso: ${ response.data.id }`);
+            await api.post('/register', data);
 
             history.push('/');
         } catch (err) {

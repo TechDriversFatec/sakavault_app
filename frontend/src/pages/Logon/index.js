@@ -26,12 +26,12 @@ class SignIn extends Component {
       try {
         const response = await api.post("/login", { email, password });
         login(response.data.token);
-        this.props.history.push("/account");
+        this.props.history.push("/profile");
 
       } catch (err) {
         this.setState({
           error:
-            "Houve um problema com o login, verifique suas credenciais. T.T"
+            "Houve um problema com o login, verifique suas credenciais."
         });
       }
     }
