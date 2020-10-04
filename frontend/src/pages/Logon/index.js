@@ -10,23 +10,23 @@ import './styles.css';
 
 class SignIn extends Component {
   state = {
-    user: "",
+    email: "",
     password: "",
     error: ""
   };
 
   handleSignIn = async e => {
     e.preventDefault();
-    const { user, password } = this.state;
+    const { email, password } = this.state;
 
-    if (!user || !password) {
+    if (!email || !password) {
       this.setState({ error: "Preencha o campo usuário e senha para continuar!" });
     } else {
 
       try {
-        const response = await api.post("/sessions", { user, password });
+        const response = await api.post("/login", { email, password });
         login(response.data.token);
-        this.props.history.push("/app");
+        this.props.history.push("/account");
 
       } catch (err) {
         this.setState({
@@ -45,20 +45,22 @@ class SignIn extends Component {
                     <form  onSubmit={this.handleSignIn}>
                         <img className="logo" src={Logo} alt="SakaVault" />
                         {this.state.error && <p>{this.state.error}</p>}
+
                         <input
                         type="email"
-                        placeholder="Usuário"
-                        onChange={e => this.setState({ user: e.target.value })}
+                        placeholder="E-mail"
+                        onChange={e => this.setState({ email: e.target.value })}
                         />
+                        
                         <input
                         type="password"
                         placeholder="Senha"
                         onChange={e => this.setState({ password: e.target.value })}
                         />
                         <button className="button buttom-margin-top" type="submit">Entrar</button>
-                        {/* <Link className="back-link" to="/register">
+                        <Link className="back-link" to="/register">
                         <FiLogIn size={16} color="#e02041"></FiLogIn>
-                        Criar uma conta</Link> */}
+                        Criar uma conta</Link>
                     </form>
                 </section>
             </div>
