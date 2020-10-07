@@ -19,6 +19,10 @@ export default function NewSecret() {
 
     const userToken = localStorage.getItem('userToken');
 
+    if(userToken == null){
+        history.push('/');
+    }
+
     async function handleNewIncident(event) {
         event.preventDefault();
 
