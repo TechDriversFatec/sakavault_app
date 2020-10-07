@@ -6,12 +6,8 @@ import api from '../../services/api';
 
 import './modal.css';
 
-export default function Modal( handleClose, show ){
-    const history = useHistory();
-
-    const userID = localStorage.getItem('userToken');
-
-    const showHideClassName = show ? "modal display-block" : "modal display-none";
+export default function Modal( props ){
+    const { className, modalRef } = props;
 
     // Delete account
     function handleDeleteAccount(){
@@ -19,9 +15,9 @@ export default function Modal( handleClose, show ){
     }
 
 	return (
-		<div className={ showHideClassName }>
-            <section className="modal hidden">
-                <span onclick={ handleClose } class="close" title="Close Modal">×</span>
+		<div ref={ modalRef } className={ `${className} modal` }>
+            <section className="hidden">
+                <span className="close" title="Close Modal">×</span>
                 <form className="modal-content">
                     <div className="container">
                         <h1>Remover Conta</h1>
@@ -33,9 +29,9 @@ export default function Modal( handleClose, show ){
                         </span>
                         
                         
-                        <div className="clearfix">
-                            <button className="button-red" type="button" onclick="document.getElementByClassName('hidden').style.display='none'" className="cancelbtn">Cancelar</button>
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" className="deletebtn">Remover</button>
+                        <div className="btn-space">
+                            <button className="button-modal cancelbtn" type="button" >Cancelar</button>
+                            <button type="button" className="button-modal deletebtn">Remover</button>
                         </div>
                     </div>
                 </form>
