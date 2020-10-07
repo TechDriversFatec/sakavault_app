@@ -35,7 +35,6 @@ export default function Profile() {
     useEffect( () => {
         if(userToken == null){ 
             history.push('/');
-            return;
         }else{
             api.get('secrets', {
                 headers: {
