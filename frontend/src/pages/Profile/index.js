@@ -13,9 +13,24 @@ import './styles.css'
 export default function Profile() {
 
     const [secrets, setSecrets] = useState([]);
+    const [dropdown, setDropdown] = useState("");
+
     const history = useHistory();
 
     const userToken = localStorage.getItem('userToken');
+
+    const showDropdown = () => {
+        console.log("show");
+        //se clicar no botão, modal aparece
+        setDropdown("show");
+        document.body.addEventListener("click", closeDropdown);
+    }
+
+    const closeDropdown = event => {
+        console.log("hidden");
+        setDropdown("");
+        document.body.removeEventListener("click", closeDropdown);
+    };
 
     useEffect( () => {
         if(userToken == null){ 
@@ -73,10 +88,7 @@ export default function Profile() {
                     Cadastrar novo segredo
                 </Link>
 
-                { state.isShowing ? <div onClick={ closeModalHandler } className="back-drop"></div> : null }
-                <button className="open-modal-btn" onClick={ openModalHandler }><FiAlertTriangle size={20} color="#e02041"/></button>
-
-                {/* <Link className="button-red" onClick={ showModal }></Link> */}
+                <a className="button-red" style={{ marginLeft: 16 }} onClick={ showDropdown }>Excluir conta</a>
                 
                 <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
             </header>
@@ -106,11 +118,7 @@ export default function Profile() {
                )) }
             </ul>
 
-            <Modal
-                className="modal" 
-                show={ state.isShowing } 
-                close={ closeModalHandler }>
-            </Modal>
+            <Modal className={ dropdown }/>
         </div>
     );
 }

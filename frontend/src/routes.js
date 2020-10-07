@@ -7,12 +7,27 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewSecret from './pages/NewSecret';
 
+import { isAuthenticated } from "./services/auth";
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+        )
+      }
+    />
+);
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route path="/" exact component={ Logon }/>
             <Route path="/register" component={ Register }/>
-            <Route path="/profile" component={ Profile } />
+            <PrivateRoute path="/profile" component={ Profile } />
             <Route path="/secrets/new" component={ NewSecret } />
             {/* 404 */}
             <Route path="*" component={() => <h1>Page not found</h1>} />

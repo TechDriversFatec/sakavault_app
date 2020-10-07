@@ -13,7 +13,7 @@ export default function NewSecret() {
     const [name, setName] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [note, setNote] = useState('');
+    const [notes, setNote] = useState('');
 
     const history = useHistory();
 
@@ -22,7 +22,7 @@ export default function NewSecret() {
     async function handleNewIncident(event) {
         event.preventDefault();
 
-        const data = { name, username, password, note };
+        const data = { name, username, password, notes };
 
         try {
             await api.post('secrets', data, {
@@ -73,7 +73,7 @@ export default function NewSecret() {
                     
                     <textarea 
                         placeholder="Descrição"
-                        value={ note }
+                        value={ notes }
                         onChange={ event => setNote(event.target.value) }
                     />
                    
