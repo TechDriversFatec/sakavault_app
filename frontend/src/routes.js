@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Logon from './pages/Logon';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import NewSecret from './pages/NewIncident';
+import NewSecret from './pages/NewSecret';
 
 const Routes = () => (
     <BrowserRouter>
@@ -13,7 +13,7 @@ const Routes = () => (
             <Route path="/" exact component={ Logon }/>
             <Route path="/register" component={ Register }/>
             <Route path="/profile" component={ Profile } />
-            <Route path="/incidents/new" component={ NewSecret } />
+            <Route path="/secrets/new" component={ NewSecret } />
             {/* 404 */}
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>

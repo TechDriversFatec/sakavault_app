@@ -1,72 +1,74 @@
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FiLogIn } from 'react-icons/fi';
 
 import Logo from '../../assets/logo.svg';
-import api from "../../services/api";
-import { login } from "../../services/auth";
+import api from '../../services/api';
 
 import './styles.css';
 
-class SignIn extends Component {
-  state = {
-    email: "",
-    password: "",
-    error: ""
-  };
+export default function SignIn(props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  handleSignIn = async e => {
-    e.preventDefault();
-    const { email, password } = this.state;
+  async function handleSignIn(event) {
+    event.preventDefault();
+
+    if(email.length === 0) return;
 
     if (!email || !password) {
       this.setState({ error: "Preencha o campo usuário e senha para continuar!" });
     } else {
-
       try {
         const response = await api.post("/login", { email, password });
-        login(response.data.token);
 
-        this.props.history.push("/profile");
+        const userToken = response.data.token;
+
+        localStorage.setItem('userToken', userToken);
+        localStorage.setItem('userID', response.data.user.id);
+        
+        props.history.push("/profile");
+
       } catch (err) {
-        this.setState({
-          error:
-            "Houve um problema com o login, verifique suas credenciais."
-        });
+        console.log(err);
+
+        setError('Houve um problema com o login, verifique suas credenciais.')
       }
     }
   };
 
-  render() {
-    return (
-        <div className="logon-container">
-            <div className="content">
-                <section className="form">
-                    <form  onSubmit={this.handleSignIn}>
-                        <img className="logo" src={Logo} alt="SakaVault" />
-                        {this.state.error && <p>{this.state.error}</p>}
+  return (
+      <div className="logon-container">
+          <div className="content">
+              <section className="form">
+                  <form  onSubmit={ handleSignIn }>
+                      <img className="logo" src={ Logo } alt="SakaVault" />
 
-                        <input
-                        type="email"
-                        placeholder="E-mail"
-                        onChange={e => this.setState({ email: e.target.value })}
-                        />
-                        
-                        <input
-                        type="password"
-                        placeholder="Senha"
-                        onChange={e => this.setState({ password: e.target.value })}
-                        />
-                        <button className="button buttom-margin-top" type="submit">Entrar</button>
-                        <Link className="back-link" to="/register">
-                        <FiLogIn size={16} color="#e02041"></FiLogIn>
-                        Criar uma conta</Link>
-                    </form>
-                </section>
-            </div>
-        </div>
-    );
-  }
+                      {!!error && <p>{error}</p>}
+
+                      <input
+                      type="email"
+                      placeholder="E-mail"
+                      value={ email }
+                      onChange={ event => setEmail(event.target.value) }
+                      />
+                      
+                      <input
+                      type="password"
+                      placeholder="Senha"
+                      value={password}
+                      onChange={ event => setPassword(event.target.value) }
+                      />
+
+                      <button className="button buttom-margin-top" type="submit">Entrar</button>
+                      
+                      <Link className="back-link" to="/register">
+                      <FiLogIn size={16} color="#e02041"></FiLogIn>
+                      Criar uma conta</Link>
+                  </form>
+              </section>
+          </div>
+      </div>
+  );
 }
-
-export default withRouter(SignIn);

@@ -9,7 +9,7 @@ import './modal.css';
 export default function Modal( handleClose, show ){
     const history = useHistory();
 
-    const userID = localStorage.getItem('id');
+    const userID = localStorage.getItem('userToken');
 
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
@@ -17,7 +17,6 @@ export default function Modal( handleClose, show ){
     function handleDeleteAccount(){
         document.getElementByClassName('hidden').style.display='block';
     }
-
 
 	return (
 		<div className={ showHideClassName }>
@@ -35,7 +34,7 @@ export default function Modal( handleClose, show ){
                         
                         
                         <div className="clearfix">
-                            <button className="button-red" type="button" onclick="document.getElementById('id01').style.display='none'" className="cancelbtn">Cancelar</button>
+                            <button className="button-red" type="button" onclick="document.getElementByClassName('hidden').style.display='none'" className="cancelbtn">Cancelar</button>
                             <button type="button" onclick="document.getElementById('id01').style.display='none'" className="deletebtn">Remover</button>
                         </div>
                     </div>

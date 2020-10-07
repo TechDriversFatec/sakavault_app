@@ -35,7 +35,7 @@ export default function Resgister() {
         <div className="register-container">
             <div className="content">
                 <section>
-                    <img src={ logoImg } alt="Be The Hero"/>
+                    <img src={ logoImg } alt="SakaVault"/>
 
                     <h1>Cadastro</h1>
 

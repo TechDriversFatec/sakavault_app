@@ -9,24 +9,25 @@ import './styles.css';
 // Import logo
 import logoImg from '../../assets/logo.svg';
 
-export default function NewIncident() {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [value, setValue] = useState('');
+export default function NewSecret() {
+    const [name, setName] = useState('');
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [note, setNote] = useState('');
 
     const history = useHistory();
 
-    const ongID = localStorage.getItem('ongId')
+    const userToken = localStorage.getItem('userToken');
 
     async function handleNewIncident(event) {
         event.preventDefault();
 
-        const data = { title, description, value };
+        const data = { name, username, password, note };
 
         try {
-            await api.post('incidents', data, {
+            await api.post('secrets', data, {
                 headers: {
-                    Authorization: ongID,
+                    Authorization: 'Bearer ' + userToken,
                 }
             });
 
@@ -42,8 +43,7 @@ export default function NewIncident() {
                 <section>
                     <img src={ logoImg } alt="SakaVault"/>
 
-                    <h1>Cadastrar novo caso</h1>
-                    <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
+                    <h1>Cadastrar novo segredo</h1>
 
                     <Link className="back-link" to="/profile">
                         <FiArrowLeft size={16} color="#e02041"></FiArrowLeft>
@@ -54,21 +54,27 @@ export default function NewIncident() {
 
                 <form onSubmit={ handleNewIncident }>
                     <input 
-                        placeholder="Título do caso"
-                        value={ title }
-                        onChange={ event => setTitle(event.target.value) }
+                        placeholder="Titulo"
+                        value={ name }
+                        onChange={ event => setName(event.target.value) }
+                    />
+
+                    <input 
+                        placeholder="Nome de usuário"
+                        value={ username }
+                        onChange={ event => setUserName(event.target.value) }
+                    />
+
+                    <input 
+                        placeholder="Senha"
+                        value={ password }
+                        onChange={ event => setPassword(event.target.value) }
                     />
                     
                     <textarea 
                         placeholder="Descrição"
-                        value={ description }
-                        onChange={ event => setDescription(event.target.value) }
-                    />
-                    
-                    <input 
-                        placeholder="Valor em reais"
-                        value={ value }
-                        onChange={ event => setValue(event.target.value) }
+                        value={ note }
+                        onChange={ event => setNote(event.target.value) }
                     />
                    
                     <button className="button" type="submit"> Cadastrar </button>
