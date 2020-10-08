@@ -8,10 +8,19 @@ import './modal.css';
 
 export default function Modal( props ){
     const { className, modalRef } = props;
+    const history = useHistory();
 
     // Delete account
     function handleDeleteAccount(){
-        document.getElementByClassName('hidden').style.display='block';
+        let confirmDelete = prompt("Para confirmar a exclusão da conta digite o nome do seu usuário: ");
+        try{
+            if(confirmDelete != null){
+                localStorage.clear();
+                history.push('/');
+            }
+        }catch(err){
+            alert(err);
+        }
     }
 
 	return (
@@ -31,7 +40,7 @@ export default function Modal( props ){
                         
                         <div className="btn-space">
                             <button className="button-modal cancelbtn" type="button" >Cancelar</button>
-                            <button type="button" className="button-modal deletebtn">Remover</button>
+                            <button type="button" className="button-modal deletebtn" onClick={ handleDeleteAccount }>Remover</button>
                         </div>
                     </div>
                 </form>
