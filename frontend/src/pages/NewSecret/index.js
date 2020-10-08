@@ -13,7 +13,7 @@ export default function NewSecret() {
     const [name, setName] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [notes, setNote] = useState('');
+    const [notes, setNotes] = useState('');
 
     const history = useHistory();
 
@@ -78,7 +78,7 @@ export default function NewSecret() {
                     <textarea 
                         placeholder="Descrição"
                         value={ notes }
-                        onChange={ event => setNote(event.target.value) }
+                        onChange={ event => setNotes(event.target.value) }
                     />
                    
                     <button className="button" type="submit"> Cadastrar </button>
