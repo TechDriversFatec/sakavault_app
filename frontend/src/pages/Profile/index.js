@@ -75,7 +75,7 @@ export default function Profile() {
                     Cadastrar novo segredo
                 </Link>
 
-                <a className="button-redback" style={{ marginLeft: 16 }} onClick={ showDropdown }>Excluir conta</a>
+                <a className="button-red" style={{ marginLeft: 16 }} onClick={ showDropdown }>Excluir conta</a>
                 
                 <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
             </header>
@@ -95,10 +95,9 @@ export default function Profile() {
                         <p>{ secrets.notes }</p>
 
                         <button 
-                        onClick={ 
-                            () => handleDeleteIncident(secrets.id), () => {
+                        onClick={ () => {
                                 if (window.confirm('Are you sure you wish to delete this item?')){
-                                    this.onCancel(secrets.id)
+                                    handleDeleteIncident(secrets.id)
                                 }
                             } 
                         } 

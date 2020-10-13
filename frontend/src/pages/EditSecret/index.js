@@ -29,7 +29,7 @@ export default function NewSecret() {
         const data = { name, username, password, notes };
 
         try {
-            await api.post('secrets', data, {
+            await api.put('secrets', data, {
                 headers: {
                     Authorization: 'Bearer ' + userToken,
                 }
@@ -37,17 +37,17 @@ export default function NewSecret() {
 
             history.push('/profile');
         } catch (error) {
-            alert('Erro ao criar novo segredo, tente novamente', error);
+            alert('Erro ao atualizar, tente novamente', error);
         }
     }
 
     return (
-        <div className="new-incident-container">
+        <div className="edit-secret-container">
             <div className="content">
                 <section>
                     <img src={ logoImg } alt="SakaVault"/>
 
-                    <h1>Cadastrar novo segredo</h1>
+                    <h1>Editar o segredo</h1>
 
                     <Link className="back-link" to="/profile">
                         <FiArrowLeft size={16} color="#e02041"></FiArrowLeft>

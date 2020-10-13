@@ -6,6 +6,7 @@ import Logon from './pages/Logon';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import NewSecret from './pages/NewSecret';
+import EditSecret from './pages/EditSecret';
 
 import { isAuthenticated } from "./services/auth";
 
@@ -28,7 +29,8 @@ const Routes = () => (
             <Route path="/" exact component={ Logon }/>
             <Route path="/register" component={ Register }/>
             <PrivateRoute path="/profile" component={ Profile } />
-            <Route path="/secrets/new" component={ NewSecret } />
+            <PrivateRoute path="/secrets/new" component={ NewSecret } />
+            <PrivateRoute path="/secrets/edit" component={ EditSecret } />
             {/* 404 */}
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>
