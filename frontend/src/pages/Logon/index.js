@@ -6,6 +6,7 @@ import Logo from '../../assets/logo.svg';
 import api from '../../services/api';
 
 import './styles.css';
+import { login } from "../../services/auth";
 
 export default function SignIn(props) {
   const [email, setEmail] = useState('');
@@ -22,10 +23,10 @@ export default function SignIn(props) {
     } else {
       try {
         const response = await api.post("/login", { email, password });
-
-        const userToken = response.data.token;
-
-        localStorage.setItem('userToken', userToken);
+                
+        login(response.data.token);
+        
+        localStorage.setItem('userName', response.data.user.name);
         localStorage.setItem('userID', response.data.user.id);
         
         props.history.push("/profile");

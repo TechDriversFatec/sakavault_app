@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link,useHistory } from 'react-router-dom';
-import { FiAlertTriangle } from 'react-icons/fi';
-
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { isAuthenticated, logout, getToken } from "../../services/auth";
 import api from '../../services/api';
 
 import './modal.css';
@@ -11,15 +10,30 @@ export default function Modal( props ){
     const history = useHistory();
 
     // Delete account
-    function handleDeleteAccount(){
+    async function handleDeleteAccount(userId){
         let confirmDelete = prompt("Para confirmar a exclusão da conta digite o nome do seu usuário: ");
-        try{
-            if(confirmDelete != null){
-                localStorage.clear();
-                history.push('/');
+
+        try {
+            const userName = localStorage.getItem('userName');
+
+            if(confirmDelete === userName && isAuthenticated() != null){
+                
+                if(confirmDelete != null ){
+                    userId = localStorage.getItem('userID');
+                    
+                    await api.delete(`account/${ userId }`, {
+                        headers: {
+                            Authorization: 'Bearer ' + getToken(),
+                        }
+                    });
+    
+                    logout();
+                    localStorage.clear();
+                    history.push('/');
+                }
             }
-        }catch(err){
-            alert(err);
+        } catch (error) {
+            alert('Erro ao excluir caso, tente novamente',error);
         }
     }
 

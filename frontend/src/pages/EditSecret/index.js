@@ -1,89 +1,155 @@
-import React, {useState} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
+import { isAuthenticated, getToken } from "../../services/auth";
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
 
 import './styles.css';
 
-// Import logo
-import logoImg from '../../assets/logo.svg';
+// // Import logo
+import logoImg from '../../assets/logo.svg'
 
-export default function NewSecret() {
-    const [name, setName] = useState('');
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [notes, setNotes] = useState('');
+class EditSecret extends Component {
+    
+    constructor(){
+        super();
+        this.state = {
+            id:'',
+            name:'',
+            username:'',
+            password:'',
+            notes:'' 
+        }
 
-    const history = useHistory();
+        this.nameIput = React.createRef();
+        this.usernameIput = React.createRef();
+        this.passwordIput = React.createRef();
+        this.notesIput = React.createRef();
 
-    const userToken = localStorage.getItem('userToken');
-
-    if(userToken == null){
-        history.push('/');
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    async function handleNewIncident(event) {
-        event.preventDefault();
+    componentDidMount(){
+        this.getSecretDetails();
+    }
 
-        const data = { name, username, password, notes };
-
-        try {
-            await api.put('secrets', data, {
+    getSecretDetails () {
+        if(isAuthenticated) { 
+            api.get(`secrets/${ this.props.match.params.id }`, {
                 headers: {
-                    Authorization: 'Bearer ' + userToken,
+                    Authorization: 'Bearer ' + getToken(),
                 }
-            });
+            }).then(response => {
+                this.setState({
+                    id:response.data.data.id,
+                    name:response.data.data.name,
+                    username:response.data.data.username,
+                    password:response.data.data.password,
+                    notes:response.data.data.notes,
+                });
+            })
+        }else{
+            this.props.history.push('/');
+        }
+    };
 
-            history.push('/profile');
-        } catch (error) {
-            alert('Erro ao atualizar, tente novamente', error);
+    onSubmit(event){
+
+        const newSecret = {
+            name: this.nameIput.current.value,
+            username: this.usernameIput.current.value,
+            password: this.passwordIput.current.value,
+            notes: this.notesIput.current.value,
+        }
+        this.editSecret(newSecret);
+        event.preventDefault();
+    }
+    
+    editSecret(newSecret) {
+        //newSecret.preventDefault();
+
+        if(isAuthenticated() != null){
+            try {
+                api.put(`secrets/${ this.state.id }`, newSecret, {
+                    headers: {
+                        Authorization: 'Bearer ' + getToken(),
+                    }
+                });
+    
+                this.props.history.push('/profile');
+            } catch (error) {
+                alert('Erro ao atualizar, tente novamente', error);
+            }
         }
     }
 
-    return (
-        <div className="edit-secret-container">
-            <div className="content">
-                <section>
-                    <img src={ logoImg } alt="SakaVault"/>
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
 
-                    <h1>Editar o segredo</h1>
+        this.setState({
+            [name]: value
+        });
+        
+    }
 
-                    <Link className="back-link" to="/profile">
-                        <FiArrowLeft size={16} color="#e02041"></FiArrowLeft>
-                        Voltar
-                    </Link>
-
-                </section>
-
-                <form onSubmit={ handleNewIncident }>
-                    <input 
-                        placeholder="Titulo"
-                        value={ name }
-                        onChange={ event => setName(event.target.value) }
-                    />
-
-                    <input 
-                        placeholder="Nome de usuário"
-                        value={ username }
-                        onChange={ event => setUserName(event.target.value) }
-                    />
-
-                    <input 
-                        placeholder="Senha"
-                        value={ password }
-                        onChange={ event => setPassword(event.target.value) }
-                    />
-                    
-                    <textarea 
-                        placeholder="Descrição"
-                        value={ notes }
-                        onChange={ event => setNotes(event.target.value) }
-                    />
-                   
-                    <button className="button" type="submit"> Cadastrar </button>
-                </form>
+    render() {
+        return (
+            <div className="edit-secret-container">
+                <div className="content">
+                    <section>
+                        <img src={ logoImg } alt="SakaVault"/>
+    
+                        <h1>Atualizar o segredo</h1>
+    
+                        <Link className="back-link" to="/profile">
+                            <FiArrowLeft size={16} color="#e02041"></FiArrowLeft>
+                            Voltar
+                        </Link>
+    
+                    </section>
+    
+                    <form onSubmit={ this.onSubmit.bind(this) }>
+                        <input 
+                            placeholder="Titulo"
+                            name="name"
+                            ref={ this.nameIput }
+                            value={ this.state.name }
+                            onChange={ this.handleInputChange }
+                        />
+    
+                        <input 
+                            placeholder="Nome de usuário"
+                            name="username"
+                            ref={ this.usernameIput }
+                            value={ this.state.username }
+                            onChange={ this.handleInputChange }
+                        />
+    
+                        <input 
+                            placeholder="Senha"
+                            name="password"
+                            ref={ this.passwordIput }
+                            value={ this.state.password }
+                            onChange={ this.handleInputChange }
+                        />
+                        
+                        <textarea 
+                            placeholder="Descrição"
+                            name="notes"
+                            ref={ this.notesIput }
+                            value={ this.state.notes }
+                            onChange={ this.handleInputChange }
+                        />
+                       
+                        <button className="button" type="submit"> Atualizar </button>
+                    </form>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
+
+export default EditSecret;
