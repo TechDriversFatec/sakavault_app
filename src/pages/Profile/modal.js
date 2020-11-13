@@ -19,9 +19,9 @@ export default function Modal( props ){
             if(confirmDelete === userName && isAuthenticated() != null){
                 
                 if(confirmDelete != null ){
-                     = localStorage.getItem('userID');
+                   
                     
-                    await api.delete(`account/${  }`, {
+                    await api.delete(`/account/`, {
                         headers: {
                             Authorization: 'Bearer ' + getToken(),
                         }
