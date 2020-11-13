@@ -10,7 +10,7 @@ export default function Modal( props ){
     const history = useHistory();
 
     // Delete account
-    async function handleDeleteAccount(userId){
+    async function handleDeleteAccount(){
         let confirmDelete = prompt("Para confirmar a exclusão da conta digite o nome do seu usuário: ");
 
         try {
@@ -19,9 +19,9 @@ export default function Modal( props ){
             if(confirmDelete === userName && isAuthenticated() != null){
                 
                 if(confirmDelete != null ){
-                    userId = localStorage.getItem('userID');
+                     = localStorage.getItem('userID');
                     
-                    await api.delete(`account/${ userId }`, {
+                    await api.delete(`account/${  }`, {
                         headers: {
                             Authorization: 'Bearer ' + getToken(),
                         }
