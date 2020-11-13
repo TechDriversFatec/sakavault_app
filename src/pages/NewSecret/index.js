@@ -7,7 +7,7 @@ import api from '../../services/api';
 import './styles.css';
 
 // Import logo
-import logoImg from '../../assets/logo.svg';
+import logoImg from '../../../assets/logo.svg';
 
 export default function NewSecret() {
     const [name, setName] = useState('');
