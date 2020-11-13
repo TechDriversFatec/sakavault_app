@@ -11,7 +11,7 @@ export default function Modal( props ){
 
     // Delete account
     async function handleDeleteAccount(){
-        let confirmDelete = prompt("Para confirmar a exclusão da conta digite o nome do seu usuário: ");
+        let confirmDelete = prompt("LUAM LIXO Para confirmar a exclusão da conta digite o nome do seu usuário: ");
 
         try {
             const userName = localStorage.getItem('userName');
