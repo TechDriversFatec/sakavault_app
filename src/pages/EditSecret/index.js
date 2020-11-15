@@ -35,24 +35,22 @@ class EditSecret extends Component {
     }
 
     getSecretDetails () {
-        if(isAuthenticated) { 
-            api.get(`secrets/${ this.props.match.params.id }`, {
-                headers: {
-                    Authorization: 'Bearer ' + getToken(),
-                }
-            }).then(response => {
-                this.setState({
-                    id:response.data.data.id,
-                    name:response.data.data.name,
-                    username:response.data.data.username,
-                    password:response.data.data.password,
-                    notes:response.data.data.notes,
-                });
-            })
-        }else{
-            this.props.history.push('/');
-        }
+        api.get(`secrets/${ this.props.match.params.id }`, {
+            headers: {
+                Authorization: 'Bearer ' + getToken(),
+            }
+        }).then(response => {
+            this.setState({
+                id:response.data.data.id,
+                name:response.data.data.name,
+                username:response.data.data.username,
+                password:response.data.data.password,
+                notes:response.data.data.notes,
+            });
+        })
     };
+    
+    console.log(this.setState.id);
 
     onSubmit(event){
 
