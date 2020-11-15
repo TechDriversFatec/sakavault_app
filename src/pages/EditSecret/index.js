@@ -50,8 +50,6 @@ class EditSecret extends Component {
         })
     };
     
-    console.log(this.setState.id);
-
     onSubmit(event){
 
         const newSecret = {
