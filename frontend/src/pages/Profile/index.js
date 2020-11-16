@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useHistory } from 'react-router-dom';
-import { FiPower, FiTrash2, FiAlertTriangle } from 'react-icons/fi';
-import Modal from './modal.js';
+import { FiPower, FiTrash2, FiAlertTriangle, FiEdit } from 'react-icons/fi';
+import { isAuthenticated, logout, getToken } from "../../services/auth";
+import Tooltip from 'react-tooltip-lite';
 
 import api from '../../services/api';
+import Modal from './modal.js';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -17,40 +19,35 @@ export default function Profile() {
 
     const history = useHistory();
 
-    const userToken = localStorage.getItem('userToken');
-
     const showDropdown = () => {
-        console.log("show");
-        //se clicar no botão, modal aparece
         setDropdown("show");
         document.body.addEventListener("click", closeDropdown);
     }
 
     const closeDropdown = event => {
-        console.log("hidden");
         setDropdown("");
         document.body.removeEventListener("click", closeDropdown);
     };
 
     useEffect( () => {
-        if(userToken == null){ 
-            history.push('/');
-        }else{
+        if(isAuthenticated()){
             api.get('secrets', {
                 headers: {
-                    Authorization: 'Bearer ' + userToken,
+                    Authorization: 'Bearer ' + getToken(),
                 }
             }).then(response => {
                 setSecrets(response.data.data);
             })
+        }else{
+            history.push('/');
         }
-    }, [userToken] );
+    }, [history]);
 
-    async function handleDeleteIncident(id) {
+    async function handleDeleteSecretItem(id) {
         try {
             await api.delete(`secrets/${ id }`, {
                 headers: {
-                    Authorization: 'Bearer ' + userToken,
+                    Authorization: 'Bearer ' + getToken(),
                 }
             });
 
@@ -60,9 +57,13 @@ export default function Profile() {
         }
     }
 
-    function handleLogout() {
-        localStorage.clear();
+    async function handleEditSecret(id) {
+      history.push(`secrets/edit/${ id }`);
+    }
 
+    function handleLogout() {
+        logout();
+        localStorage.clear();
         history.push('/');
     }
 
@@ -75,13 +76,20 @@ export default function Profile() {
                     Cadastrar novo segredo
                 </Link>
 
-                <a className="button-redback" style={{ marginLeft: 16 }} onClick={ showDropdown }>Excluir conta</a>
-                
-                <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
+                <Tooltip content="Excluir conta">
+                    <button
+                        onClick={ showDropdown }>
+                        <FiAlertTriangle color="#e02041"></FiAlertTriangle>
+                    </button>
+                </Tooltip>
+
+                <Tooltip content="Sair">
+                    <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
+                </Tooltip>
             </header>
 
             <h1>Segredos cadastrados</h1>
-            
+
             <ul>
                { secrets.map(secrets => (
                     <li key={ secrets.id }>
@@ -94,17 +102,26 @@ export default function Profile() {
                         <strong>Notas</strong>
                         <p>{ secrets.notes }</p>
 
-                        <button 
-                        onClick={ 
-                            () => handleDeleteIncident(secrets.id), () => {
-                                if (window.confirm('Are you sure you wish to delete this item?')){
-                                    this.onCancel(secrets.id)
-                                }
-                            } 
-                        } 
+                        <button
+                        className="btn-space"
+                        onClick={() => {
+                          handleEditSecret(secrets.id)
+                        }}
                         type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                          <FiEdit size={20} color="#a8a8b3" />
                         </button>
+
+                        <button
+                        onClick={ () => {
+                                if (window.confirm('Are you sure you wish to delete this item?')){
+                                    handleDeleteSecretItem(secrets.id)
+                                }
+                            }
+                        }
+                        type="button">
+                          <FiTrash2 size={20} color="#a8a8b3"/>
+                        </button>
+
                     </li>
                )) }
             </ul>

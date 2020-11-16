@@ -23,7 +23,7 @@ export default function NewSecret() {
         history.push('/');
     }
 
-    async function handleNewIncident(event) {
+    async function handleNewSecret(event) {
         event.preventDefault();
 
         const data = { name, username, password, notes };
@@ -37,12 +37,12 @@ export default function NewSecret() {
 
             history.push('/profile');
         } catch (error) {
-            alert('Erro ao criar novo caso, tente novamente', error);
+            alert('Erro ao criar novo segredo, tente novamente', error);
         }
     }
 
     return (
-        <div className="new-incident-container">
+        <div className="new-secrets-container">
             <div className="content">
                 <section>
                     <img src={ logoImg } alt="SakaVault"/>
@@ -56,7 +56,7 @@ export default function NewSecret() {
 
                 </section>
 
-                <form onSubmit={ handleNewIncident }>
+                <form onSubmit={ handleNewSecret }>
                     <input 
                         placeholder="Titulo"
                         value={ name }

@@ -1,4 +1,4 @@
-.new-secrets-container {
+.edit-secret-container {
     width:100%;
     max-width: 1120px;
     height: 100vh;
@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.new-secrets-container .content {
+.edit-secret-container .content {
     width: 100%;
     padding: 96px;
     background-color: #f0f0f5;
@@ -21,7 +21,7 @@
     align-items: center;
 }
 
-.new-secrets-container .content section {
+.edit-secret-container .content section {
     width: 100%;
     max-width: 380px;
 }
@@ -30,25 +30,25 @@ img {
     margin: 0;
 }
 
-.new-secrets-container .content section h1 {
+.edit-secret-container .content section h1 {
     margin: 64px 0 32px;
     font-size: 32px;
     font-weight: lighter;
     color: #444;
 }
 
-.new-secrets-container .content section p {
+.edit-secret-container .content section p {
     font-size: 16px;
     color: #737380;
     line-height: 32px;
 }
 
-.new-secrets-container .content form {
+.edit-secret-container .content form {
     width: 100%;
     max-width: 450px;
 }
 
-.new-secrets-container .content form input,
-.new-secrets-container .content form textarea {
+.edit-secret-container .content form input,
+.edit-secret-container .content form textarea {
     margin-top: 8px;
 }

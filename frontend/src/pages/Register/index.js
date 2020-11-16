@@ -60,7 +60,8 @@ export default function Resgister() {
                         onChange={ event => setEmail(event.target.value) }
                     />
 
-                    <input 
+                    <input
+                        type="password"
                         placeholder="Senha" 
                         value={ password } 
                         onChange={ event => setPassword(event.target.value) }

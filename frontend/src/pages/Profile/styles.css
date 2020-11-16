@@ -76,6 +76,15 @@
     opacity: 0.8;
 }
 
+.profile-container ul li button.btn-space {
+    position: absolute;
+    right: 64px;
+    top:24px;
+    border: 0;
+    background-color: transparent;
+    transition: opacity .2s;
+}
+
 .profile-container ul li strong {
     display: block;
     margin-bottom: 16px;
