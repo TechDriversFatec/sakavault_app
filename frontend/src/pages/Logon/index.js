@@ -6,7 +6,7 @@ import Logo from '../../assets/logo.svg';
 import api from '../../services/api';
 
 import './styles.css';
-import { login } from "../../services/auth";
+import { login, hasUser } from "../../services/auth";
 
 export default function SignIn(props) {
   const [email, setEmail] = useState('');
@@ -23,12 +23,10 @@ export default function SignIn(props) {
     } else {
       try {
         const response = await api.post("/login", { email, password });
-                
+
         login(response.data.token);
-        
-        localStorage.setItem('userName', response.data.user.name);
-        localStorage.setItem('userID', response.data.user.id);
-        
+        hasUser(response.data.user.name);
+
         props.history.push("/profile");
 
       } catch (err) {
@@ -54,7 +52,7 @@ export default function SignIn(props) {
                       value={ email }
                       onChange={ event => setEmail(event.target.value) }
                       />
-                      
+
                       <input
                       type="password"
                       placeholder="Senha"
@@ -63,7 +61,7 @@ export default function SignIn(props) {
                       />
 
                       <button className="button buttom-margin-top" type="submit">Entrar</button>
-                      
+
                       <Link className="back-link" to="/register">
                       <FiLogIn size={16} color="#e02041"></FiLogIn>
                       Criar uma conta</Link>

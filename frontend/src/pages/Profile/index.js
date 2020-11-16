@@ -30,7 +30,7 @@ export default function Profile() {
     };
 
     useEffect( () => {
-        if(isAuthenticated()){ 
+        if(isAuthenticated()){
             api.get('secrets', {
                 headers: {
                     Authorization: 'Bearer ' + getToken(),
@@ -57,6 +57,10 @@ export default function Profile() {
         }
     }
 
+    async function handleEditSecret(id) {
+      history.push(`secrets/edit/${ id }`);
+    }
+
     function handleLogout() {
         logout();
         localStorage.clear();
@@ -73,19 +77,19 @@ export default function Profile() {
                 </Link>
 
                 <Tooltip content="Excluir conta">
-                    <button 
+                    <button
                         onClick={ showDropdown }>
                         <FiAlertTriangle color="#e02041"></FiAlertTriangle>
                     </button>
                 </Tooltip>
-                
+
                 <Tooltip content="Sair">
                     <button onClick={ handleLogout } type="submit"><FiPower size={ 18 } color="#e02041" /></button>
                 </Tooltip>
             </header>
 
             <h1>Segredos cadastrados</h1>
-            
+
             <ul>
                { secrets.map(secrets => (
                     <li key={ secrets.id }>
@@ -98,18 +102,26 @@ export default function Profile() {
                         <strong>Notas</strong>
                         <p>{ secrets.notes }</p>
 
-                        <a href={"/secrets/edit/" + secrets.id}><FiEdit size={20} color="#a8a8b3" /></a>
-                        <button 
+                        <button
+                        className="btn-space"
+                        onClick={() => {
+                          handleEditSecret(secrets.id)
+                        }}
+                        type="button">
+                          <FiEdit size={20} color="#a8a8b3" />
+                        </button>
+
+                        <button
                         onClick={ () => {
                                 if (window.confirm('Are you sure you wish to delete this item?')){
                                     handleDeleteSecretItem(secrets.id)
                                 }
-                            } 
-                        } 
+                            }
+                        }
                         type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                          <FiTrash2 size={20} color="#a8a8b3"/>
                         </button>
-                        
+
                     </li>
                )) }
             </ul>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { isAuthenticated, logout, getToken } from "../../services/auth";
+import { isAuthenticated, logout, getToken, getUser } from "../../services/auth";
 import api from '../../services/api';
 
 import './modal.css';
@@ -10,23 +10,29 @@ export default function Modal( props ){
     const history = useHistory();
 
     // Delete account
-    async function handleDeleteAccount(userId){
+    async function handleDeleteAccount(){
         let confirmDelete = prompt("Para confirmar a exclusão da conta digite o nome do seu usuário: ");
 
         try {
-            const userName = localStorage.getItem('userName');
+            const user = await api.get(`/account`, {
+                headers: {
+                    Authorization: 'Bearer ' + getToken(),
+                }
+            });
 
-            if(confirmDelete === userName && isAuthenticated() != null){
-                
+            const userName = user.data.name;
+
+            if(confirmDelete === userName && isAuthenticated()){
+
                 if(confirmDelete != null ){
-                    userId = localStorage.getItem('userID');
-                    
-                    await api.delete(`account/${ userId }`, {
+                    console.log(user.data.id);
+
+                    await api.delete(`account/${ user.data.id }`, {
                         headers: {
                             Authorization: 'Bearer ' + getToken(),
                         }
                     });
-    
+
                     logout();
                     localStorage.clear();
                     history.push('/');
@@ -39,26 +45,24 @@ export default function Modal( props ){
 
 	return (
 		<div ref={ modalRef } className={ `${className} modal` }>
-            <section className="hidden">
-                <span className="close" title="Close Modal">×</span>
-                <form className="modal-content">
-                    <div className="container">
-                        <h1>Remover Conta</h1>
-                        <span>
-                            <p>Tem certeza que deseja deletar sua conta?</p>
-                            <p className="strong">
-                            Todos os dados serão perdidos permanentemente sem a possibilidade de recuperação.
-                            </p>
-                        </span>
-                        
-                        
-                        <div className="btn-space">
-                            <button className="button-modal cancelbtn" type="button" >Cancelar</button>
-                            <button type="button" className="button-modal deletebtn" onClick={ handleDeleteAccount }>Remover</button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-        </div>
+      <section className="hidden">
+          <span className="close" title="Close Modal">×</span>
+          <form className="modal-content">
+              <div className="container">
+                  <h1>Remover Conta</h1>
+                  <span>
+                      <p>Tem certeza que deseja deletar sua conta?</p>
+                      <p className="strong">
+                      Todos os dados serão perdidos permanentemente sem a possibilidade de recuperação.
+                      </p>
+                  </span>
+                  <div className="btn-space">
+                      <button className="button-modal cancelbtn" type="button" >Cancelar</button>
+                      <button type="button" className="button-modal deletebtn" onClick={ handleDeleteAccount }>Remover</button>
+                  </div>
+              </div>
+          </form>
+      </section>
+    </div>
 	);
 };

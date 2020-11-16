@@ -35,20 +35,26 @@ class EditSecret extends Component {
     }
 
     getSecretDetails () {
-        if(isAuthenticated) { 
-            api.get(`secrets/${ this.props.match.params.id }`, {
-                headers: {
-                    Authorization: 'Bearer ' + getToken(),
+        if(isAuthenticated) {
+            if(typeof this.props.match.params.id !== "undefined") {
+                try{
+                    api.get(`secrets/${ this.props.match.params.id }`, {
+                        headers: {
+                            Authorization: 'Bearer ' + getToken(),
+                        }
+                    }).then(response => {
+                        this.setState({
+                            id:response.data.data.id,
+                            name:response.data.data.name,
+                            username:response.data.data.username,
+                            password:response.data.data.password,
+                            notes:response.data.data.notes,
+                        });
+                    })
+                }catch (error){
+
                 }
-            }).then(response => {
-                this.setState({
-                    id:response.data.data.id,
-                    name:response.data.data.name,
-                    username:response.data.data.username,
-                    password:response.data.data.password,
-                    notes:response.data.data.notes,
-                });
-            })
+            }
         }else{
             this.props.history.push('/');
         }
@@ -92,7 +98,6 @@ class EditSecret extends Component {
         this.setState({
             [name]: value
         });
-        
     }
 
     render() {
