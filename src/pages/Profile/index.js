@@ -7,7 +7,7 @@ import Tooltip from 'react-tooltip-lite';
 import api from 'services/api';
 import Modal from './modal.js';
 
-import logoImg from 'assets/logo.svg';
+import logo from 'assets/logo.svg';
 
 // Styles
 import './styles.css'
@@ -68,7 +68,7 @@ export default function Profile() {
     return (
         <div className="profile-container">
             <header>
-                <img src={ logoImg } alt="SakaVault"/>
+                <img src={ window.location.origin + logo } alt="SakaVault"/>
 
                 <Link className="button" to="/secrets/new">
                     Cadastrar novo segredo

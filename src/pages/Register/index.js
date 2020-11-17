@@ -8,7 +8,7 @@ import api from 'services/api';
 import './styles.css';
 
 // Import logo
-import logoImg from 'assets/logo.svg';
+import logo from 'assets/logo.svg';
 
 export default function Resgister() {
     const [name, setName] = useState('');
@@ -35,7 +35,7 @@ export default function Resgister() {
         <div className="register-container">
             <div className="content">
                 <section>
-                    <img src={ logoImg } alt="SakaVault"/>
+                    <img src={ window.location.origin + logo } alt="SakaVault"/>
 
                     <h1>Cadastro</h1>
 

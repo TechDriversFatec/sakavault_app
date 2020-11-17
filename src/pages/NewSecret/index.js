@@ -7,7 +7,7 @@ import api from 'services/api';
 import './styles.css';
 
 // Import logo
-import logoImg from 'assets/logo.svg';
+import logo from 'assets/logo.svg';
 
 export default function NewSecret() {
     const [name, setName] = useState('');
@@ -45,7 +45,7 @@ export default function NewSecret() {
         <div className="new-secrets-container">
             <div className="content">
                 <section>
-                    <img src={ logoImg } alt="SakaVault"/>
+                    <img src={ window.location.origin + logo } alt="SakaVault"/>
 
                     <h1>Cadastrar novo segredo</h1>
 

@@ -8,7 +8,7 @@ import api from 'services/api';
 import './styles.css';
 
 // // Import logo
-import logoImg from 'assets/logo.svg'
+import logo from 'assets/logo.svg'
 
 class EditSecret extends Component {
     
@@ -107,7 +107,7 @@ class EditSecret extends Component {
             <div className="edit-secret-container">
                 <div className="content">
                     <section>
-                        <img src={ logoImg } alt="SakaVault"/>
+                        <img src={ window.location.origin + logo } alt="SakaVault"/>
     
                         <h1>Atualizar o segredo</h1>
     
