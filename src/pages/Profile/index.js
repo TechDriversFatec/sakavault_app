@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link,useHistory } from 'react-router-dom';
+import { Link,useHistory, generatePath } from 'react-router-dom';
 import { FiPower, FiTrash2, FiAlertTriangle, FiEdit } from 'react-icons/fi';
 import { isAuthenticated, logout, getToken } from "../../services/auth";
 import Tooltip from 'react-tooltip-lite';
@@ -59,10 +59,6 @@ export default function Profile() {
         }
     }
 
-    async function handleEditSecret(id) {
-      history.push(`secrets/edit/${ id }`);
-    }
-
     function handleLogout() {
         logout();
         localStorage.clear();
@@ -104,14 +100,13 @@ export default function Profile() {
                         <strong>Notas</strong>
                         <p>{ secrets.notes }</p>
 
-                        <button
-                        className="btn-space"
-                        onClick={() => {
-                          handleEditSecret(secrets.id)
-                        }}
-                        type="button">
-                          <FiEdit size={20} color="#a8a8b3" />
-                        </button>
+                        <Link to={ generatePath("secrets/edit/:id?", { id: secrets.id } ) } >
+                            <button
+                            className="btn-space"
+                            type="button">
+                                <FiEdit size={20} color="#a8a8b3" />
+                            </button>
+                        </Link>
 
                         <button
                         onClick={ () => {

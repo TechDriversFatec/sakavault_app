@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { isAuthenticated, logout, getToken, getUser } from "../../services/auth";
+import { isAuthenticated, logout, getToken } from "../../services/auth";
 import api from '../../services/api';
 
 import './modal.css';
