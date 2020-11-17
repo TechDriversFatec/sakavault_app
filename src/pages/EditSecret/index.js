@@ -56,6 +56,8 @@ class EditSecret extends Component {
                 }
             }
         }else{
+            logout();
+            localStorage.clear();
             this.props.history.push('/');
         }
     };

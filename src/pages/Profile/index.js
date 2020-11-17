@@ -39,6 +39,8 @@ export default function Profile() {
                 setSecrets(response.data.data);
             })
         }else{
+            logout();
+            localStorage.clear();
             history.push('/');
         }
     }, [history]);
