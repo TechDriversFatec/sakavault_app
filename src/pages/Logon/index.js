@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiLogIn } from 'react-icons/fi';
 
-import Logo from '../../assets/logo.svg';
-import api from '../../services/api';
+import Logo from 'assets/logo.svg';
+import api from 'services/api';
 
 import './styles.css';
-import { login, hasUser } from "../../services/auth";
+import { login, hasUser } from "services/auth";
 
 export default function SignIn(props) {
   const [email, setEmail] = useState('');

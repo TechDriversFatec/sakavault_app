@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import { isAuthenticated, getToken, logout } from "../../services/auth";
+import { isAuthenticated, getToken, logout } from "services/auth";
 import { FiArrowLeft } from 'react-icons/fi';
 
-import api from '../../services/api';
+import api from 'services/api';
 
 import './styles.css';
 
 // // Import logo
-import logoImg from '../../assets/logo.svg'
+import logoImg from 'assets/logo.svg'
 
 class EditSecret extends Component {
     

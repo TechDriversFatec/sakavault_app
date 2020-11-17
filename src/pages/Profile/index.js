@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useHistory, generatePath } from 'react-router-dom';
 import { FiPower, FiTrash2, FiAlertTriangle, FiEdit } from 'react-icons/fi';
-import { isAuthenticated, logout, getToken } from "../../services/auth";
+import { isAuthenticated, logout, getToken } from "services/auth";
 import Tooltip from 'react-tooltip-lite';
 
-import api from '../../services/api';
+import api from 'services/api';
 import Modal from './modal.js';
 
-import logoImg from '../../assets/logo.svg';
+import logoImg from 'assets/logo.svg';
 
 // Styles
 import './styles.css'
