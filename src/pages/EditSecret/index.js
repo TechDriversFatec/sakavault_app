@@ -59,7 +59,7 @@ class EditSecret extends Component {
             this.props.history.push('/');
         }
     };
-
+    
     onSubmit(event){
 
         const newSecret = {
