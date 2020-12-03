@@ -7,7 +7,7 @@ import Tooltip from 'react-tooltip-lite';
 import api from 'services/api';
 import Modal from './modal.js';
 
-import logo from 'assets/logo.svg';
+import logo from '../assets/logo.svg';
 
 // Styles
 import './styles.css'
